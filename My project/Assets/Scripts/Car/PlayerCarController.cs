@@ -12,10 +12,15 @@ public class PlayerCarController : MonoBehaviour
 
     public float speed, accelMultiplier = 3, steeringMultiplier;
 
+    private PlayerInput playerInput;
 
-    void Start()
+
+    void Awake()
     {
+        playerInput = GetComponent<PlayerInput>();
 
+        PlayerInputActions playerInputActions = new PlayerInputActions();
+        //playerInputActions.Player.Move.performed += Move_performed;
     }
 
     private void FixedUpdate()
