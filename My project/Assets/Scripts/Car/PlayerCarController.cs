@@ -3,16 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerCarController : MonoBehaviour
 {
     [SerializeField]
     Rigidbody rb;
 
-    public float speed, accelMultiplier = 3;
+    public float speed, accelMultiplier = 3, steeringMultiplier;
 
-    //Inputs
-    public InputAction playerInput;
 
     void Start()
     {
@@ -23,7 +22,6 @@ public class PlayerCarController : MonoBehaviour
     {
         Accelerate();
 
-        Steering();
     }
 
     void Update()
@@ -37,9 +35,13 @@ public class PlayerCarController : MonoBehaviour
         rb.AddForce(rb.transform.forward * speed * accelMultiplier);
     }
 
-    private void Steering()
+    public void Move(InputAction.CallbackContext context)
     {
-      
+        if (context.performed)
+        {
+            Debug.Log("Moved");
+            rb.AddForce(rb.transform.right * steeringMultiplier);
+        }
     }
 
 }
