@@ -12,20 +12,21 @@ public class PlayerCarController : MonoBehaviour
 
     public float speed, accelMultiplier = 3, steeringMultiplier;
 
-    private PlayerInput playerInput;
+    private Vector2 input = Vector2.zero;
+
+    // [SerializeField] InputAction playerAction;
+    // private Vector2 playerInput;
 
 
     void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-
-        PlayerInputActions playerInputActions = new PlayerInputActions();
-        //playerInputActions.Player.Move.performed += Move_performed;
+        // playerInput = GetComponent<PlayerInput>();
     }
 
     private void FixedUpdate()
     {
         Accelerate();
+        Steer();
 
     }
 
@@ -40,13 +41,41 @@ public class PlayerCarController : MonoBehaviour
         rb.AddForce(rb.transform.forward * speed * accelMultiplier);
     }
 
-    public void Move(InputAction.CallbackContext context)
+    private void Steer()
     {
-        if (context.performed)
+        if (Mathf.Abs(input.x) > 0)
         {
-            Debug.Log("Moved");
-            rb.AddForce(rb.transform.right * steeringMultiplier);
+            rb.AddForce(rb.transform.right * steeringMultiplier * input.x);
         }
     }
+
+    public void SetInput(Vector2 inputVector)
+    {
+        inputVector.Normalize();
+
+        input = inputVector;
+    }
+
+    // public void Move(InputAction.CallbackContext context)
+    // {
+    //     if (context.performed)
+    //     {
+    //         Debug.Log("Moved");
+    //         playerInput = playerAction.ReadValue<Vector2>();
+    //         float horizontal = playerInput.x;
+
+    //         rb.AddForce(rb.transform.right * steeringMultiplier * horizontal);
+    //     }
+    // }
+
+    // private void OnEnable()
+    // {
+    //     playerAction.Enable();
+    // }
+
+    // private void OnDsable()
+    // {
+    //     playerAction.Disable();
+    // }
 
 }
