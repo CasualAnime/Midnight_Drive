@@ -903,8 +903,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.17651592, g: 0.29130897, b: 0.4716981, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.02745098, g: 0.02745098, b: 0.02745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1343,13 +1343,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9061268, y: -0.089651726, z: -0.2427959, w: 0.33458486}
+  m_LocalRotation: {x: -0.93828994, y: 0.024755713, z: -0.10206165, w: 0.3295187}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -139.467, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: -142.17, y: -15.257019, z: 8.278}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4085,15 +4085,7 @@ MonoBehaviour:
   rb: {fileID: 1883216962}
   speed: 10
   accelMultiplier: 3
-  playerInput:
-    m_Name: Player Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5d6b9aff-5adf-4ed1-a708-b73767208338
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  steeringMultiplier: 0
 --- !u!114 &1883216965
 MonoBehaviour:
   m_ObjectHideFlags: 0
