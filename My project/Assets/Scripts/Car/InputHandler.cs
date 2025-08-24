@@ -11,7 +11,7 @@ public class InputHandler : MonoBehaviour
         Vector2 input = Vector2.zero;
 
         input.x = Input.GetAxis("Horizontal");
-
+        input.y = Input.GetAxis("Vertical");
         carController.SetInput(input);
 
         if (Input.GetKeyDown(KeyCode.R))

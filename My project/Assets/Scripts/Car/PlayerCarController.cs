@@ -11,11 +11,16 @@ public class PlayerCarController : MonoBehaviour
     [SerializeField]
     Rigidbody rb;
 
-    public float speed, accelMultiplier = 3, steeringMultiplier;
+    public float speed, accelMultiplier = 3, steeringMultiplier = 100f;
+
+    public float accelerationTime = 2f; // Time to reach max acceleration
+    private float currentAcceleration = 0f;
 
     private Vector2 input = Vector2.zero;
 
     public Transform playerTransform;
+
+    private bool canControl = false;
 
     // [SerializeField] InputAction playerAction;
     // private Vector2 playerInput;
@@ -24,13 +29,21 @@ public class PlayerCarController : MonoBehaviour
     void Awake()
     {
         // playerInput = GetComponent<PlayerInput>();
+        StartCoroutine(StartDelay());
+    }
+
+    public IEnumerator StartDelay()
+    {
+        yield return new WaitForSeconds(3f);
+        canControl = true;
     }
 
     private void FixedUpdate()
     {
+        if (!canControl) return; // Prevents movement until the delay is over
+
         Accelerate();
         Steer();
-
     }
 
     void Update()
@@ -41,15 +54,20 @@ public class PlayerCarController : MonoBehaviour
     private void Accelerate()
     {
         rb.linearDamping = 0;
-        rb.AddForce(rb.transform.forward * speed * accelMultiplier);
+
+        // Gradually increase acceleration over time
+        float targetAcceleration = speed * accelMultiplier;
+        currentAcceleration = Mathf.MoveTowards(currentAcceleration, targetAcceleration, (targetAcceleration / accelerationTime) * Time.fixedDeltaTime);    
+
+        rb.AddForce(rb.transform.forward * currentAcceleration);
     }
 
     private void Steer()
     {
-        if (Mathf.Abs(input.x) > 0)
+        if (Mathf.Abs(input.x) > 0 && rb.linearVelocity.magnitude > 0.1f)
         {
-            Debug.Log("Steering");
-            rb.AddForce(rb.transform.right * steeringMultiplier * input.x);
+            float turn = input.x * steeringMultiplier * Time.fixedDeltaTime;
+            rb.MoveRotation(rb.rotation * Quaternion.Euler(0f, turn, 0f));
         }
     }
 
